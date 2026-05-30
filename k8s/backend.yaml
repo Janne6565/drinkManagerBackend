@@ -15,8 +15,6 @@ spec:
       labels:
         app: drink-backend
     spec:
-      imagePullSecrets:
-        - name: ghcr-pull-secret
       containers:
         - name: drink-backend
           image: ghcr.io/janne6565/drinkmanagerbackend:latest
