@@ -39,9 +39,14 @@ public class OrderItem {
     @Column(nullable = false)
     private int quantity;
 
-    public OrderItem(Long drinkId, String drinkName, int quantity) {
+    /** True when the guest already has a glass and just needs a refill (no new glass needed). */
+    @Column(name = "has_glass", nullable = false, columnDefinition = "boolean default false")
+    private boolean hasGlass;
+
+    public OrderItem(Long drinkId, String drinkName, int quantity, boolean hasGlass) {
         this.drinkId = drinkId;
         this.drinkName = drinkName;
         this.quantity = quantity;
+        this.hasGlass = hasGlass;
     }
 }

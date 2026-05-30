@@ -40,7 +40,8 @@ public class OrderMapper {
 
     private List<OrderItemDto> toItemDtos(List<OrderItem> items) {
         return items.stream()
-                .map(item -> new OrderItemDto(item.getDrinkId(), item.getDrinkName(), item.getQuantity()))
+                .map(item -> new OrderItemDto(
+                        item.getDrinkId(), item.getDrinkName(), item.getQuantity(), item.isHasGlass()))
                 .toList();
     }
 }

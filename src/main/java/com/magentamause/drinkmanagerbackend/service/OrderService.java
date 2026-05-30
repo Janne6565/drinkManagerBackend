@@ -43,7 +43,8 @@ public class OrderService {
             if (!drink.isAvailable()) {
                 throw new IllegalArgumentException("Drink is not available: " + drink.getName());
             }
-            order.addItem(new OrderItem(drink.getId(), drink.getName(), itemRequest.quantity()));
+            order.addItem(new OrderItem(
+                    drink.getId(), drink.getName(), itemRequest.quantity(), itemRequest.hasGlass()));
         }
 
         Order saved = orderRepository.save(order);
