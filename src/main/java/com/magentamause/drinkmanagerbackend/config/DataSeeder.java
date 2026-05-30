@@ -22,16 +22,17 @@ public class DataSeeder implements CommandLineRunner {
             return;
         }
         List<Drink> drinks = List.of(
-                new Drink("Bier", "Kühles Pils vom Fass", true),
-                new Drink("Radler", "Bier mit Zitronenlimonade", true),
-                new Drink("Cola", "Eiskalte Cola", true),
-                new Drink("Fanta", "Orangenlimonade", true),
-                new Drink("Apfelschorle", "Apfelsaft mit Sprudel", true),
-                new Drink("Wasser", "Still oder mit Kohlensäure", true),
-                new Drink("Sekt", "Für den Geburtstagstoast", true),
-                new Drink("Aperol Spritz", "Aperol, Prosecco, Soda", true),
-                new Drink("Gin Tonic", "Gin mit Tonic Water", true),
-                new Drink("Kaffee", "Frisch gebrüht", true));
+                new Drink("Bier", "Beer", "Kühles Pils vom Fass", "Cold draft pilsner", true),
+                new Drink("Radler", "Shandy", "Bier mit Zitronenlimonade", "Beer with lemon soda", true),
+                new Drink("Cola", "Cola", "Eiskalte Cola", "Ice-cold cola", true),
+                new Drink("Fanta", "Fanta", "Orangenlimonade", "Orange soda", true),
+                new Drink("Apfelschorle", "Apple Spritzer", "Apfelsaft mit Sprudel",
+                        "Apple juice with sparkling water", true),
+                new Drink("Wasser", "Water", "Still oder mit Kohlensäure", "Still or sparkling", true),
+                new Drink("Sekt", "Sparkling Wine", "Für den Geburtstagstoast", "For the birthday toast", true),
+                new Drink("Aperol Spritz", "Aperol Spritz", "Aperol, Prosecco, Soda", "Aperol, prosecco, soda", true),
+                new Drink("Gin Tonic", "Gin & Tonic", "Gin mit Tonic Water", "Gin with tonic water", true),
+                new Drink("Kaffee", "Coffee", "Frisch gebrüht", "Freshly brewed", true));
         drinkRepository.saveAll(drinks);
         log.info("Seeded {} drinks", drinks.size());
     }

@@ -8,6 +8,12 @@ import org.springframework.stereotype.Component;
 public class DrinkMapper {
 
     public DrinkDto toDto(Drink drink) {
-        return new DrinkDto(drink.getId(), drink.getName(), drink.getDescription(), drink.isAvailable());
+        return new DrinkDto(
+                drink.getId(),
+                drink.getName(),
+                drink.getNameEn(),
+                drink.getDescription(),
+                drink.getDescriptionEn(),
+                drink.isAvailable());
     }
 }

@@ -36,7 +36,12 @@ public class DrinkService {
     @Transactional
     public DrinkDto create(CreateDrinkRequest request) {
         boolean available = request.available() == null || request.available();
-        Drink drink = new Drink(request.name().trim(), request.description(), available);
+        Drink drink = new Drink(
+                request.name().trim(),
+                trimToNull(request.nameEn()),
+                request.description(),
+                trimToNull(request.descriptionEn()),
+                available);
         return drinkMapper.toDto(drinkRepository.save(drink));
     }
 
@@ -44,7 +49,9 @@ public class DrinkService {
     public DrinkDto update(Long id, UpdateDrinkRequest request) {
         Drink drink = getEntity(id);
         drink.setName(request.name().trim());
+        drink.setNameEn(trimToNull(request.nameEn()));
         drink.setDescription(request.description());
+        drink.setDescriptionEn(trimToNull(request.descriptionEn()));
         drink.setAvailable(request.available());
         return drinkMapper.toDto(drinkRepository.save(drink));
     }
@@ -59,5 +66,13 @@ public class DrinkService {
     public Drink getEntity(Long id) {
         return drinkRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Drink not found: " + id));
+    }
+
+    private static String trimToNull(String value) {
+        if (value == null) {
+            return null;
+        }
+        String trimmed = value.trim();
+        return trimmed.isEmpty() ? null : trimmed;
     }
 }
