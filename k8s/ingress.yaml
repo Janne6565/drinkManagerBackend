@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: drink-backend
+  namespace: christians-drinks
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: christians-drinks.jannekeipert.de
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: drink-backend
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - christians-drinks.jannekeipert.de
+      secretName: christians-drinks-tls

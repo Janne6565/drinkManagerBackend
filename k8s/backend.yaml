@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drink-backend
+  namespace: christians-drinks
+  labels:
+    app: drink-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: drink-backend
+  template:
+    metadata:
+      labels:
+        app: drink-backend
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: drink-backend
+          image: ghcr.io/janne6565/drinkmanagerbackend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://drink-postgres:5432/drinkmanager
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: drink-secret
+                  key: POSTGRES_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: drink-secret
+                  key: POSTGRES_PASSWORD
+            - name: APP_ADMIN_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: drink-secret
+                  key: APP_ADMIN_USERNAME
+            - name: APP_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: drink-secret
+                  key: APP_ADMIN_PASSWORD
+            - name: APP_CORS_ALLOWED_ORIGINS
+              value: https://christians-drinks.jannekeipert.de
+          readinessProbe:
+            httpGet:
+              path: /api/drinks
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/drinks
+              port: 8080
+            initialDelaySeconds: 40
+            periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: drink-backend
+  namespace: christians-drinks
+spec:
+  selector:
+    app: drink-backend
+  ports:
+    - port: 8080
+      targetPort: 8080

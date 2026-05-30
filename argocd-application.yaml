@@ -1,0 +1,21 @@
+# Apply once with: kubectl apply -f argocd-application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: christians-drinks-backend
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Janne6565/drinkManagerBackend
+    targetRevision: HEAD
+    path: k8s
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: christians-drinks
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
