@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# real secret is applied manually, never committed
+k8s/secret.yaml
